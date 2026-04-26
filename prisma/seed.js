@@ -20,7 +20,7 @@ async function main() {
   await prisma.settings.upsert({
     where: { id: 'default' },
     update: {},
-    create: { id: 'default', amountPerMember: 50, masjidName: 'Al-Noor Masjid' },
+    create: { id: 'default', amountPerMember: 50, masjidName: 'Masjid Abu Bakar Waripora' },
   })
   console.log('✅ Settings created')
 
