@@ -76,7 +76,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=0.7, maximum-scale=0.7"
+        />
+      </head>
+
       <body>
         <AuthProvider>
           <AppShell>{children}</AppShell>
