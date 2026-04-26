@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+}
+
+model Settings {
+  id              String   @id @default(cuid())
+  amountPerMember Float    @default(50)
+  masjidName      String   @default("Village Masjid")
+  updatedAt       DateTime @updatedAt
+}
+
+model Family {
+  id            String               @id @default(cuid())
+  familyName    String
+  address       String?
+  phone         String?
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  members       Member[]
+  contributions MonthlyContribution[]
+  donations     Donation[]
+}
+
+model Member {
+  id        String   @id @default(cuid())
+  name      String
+  age       Int?
+  role      String   @default("member") // head, member
+  familyId  String
+  family    Family   @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model MonthlyContribution {
+  id         String   @id @default(cuid())
+  familyId   String
+  family     Family   @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  amount     Float
+  paidAmount Float    @default(0)
+  month      String   // Format: "YYYY-MM"
+  status     String   @default("unpaid") // paid, partial, unpaid
+  note       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([familyId, month])
+}
+
+model Donation {
+  id        String   @id @default(cuid())
+  donorName String?
+  familyId  String?
+  family    Family?  @relation(fields: [familyId], references: [id], onDelete: SetNull)
+  amount    Float
+  type      String   @default("sadaqah") // zakat, sadaqah, fitrah, other
+  note      String?
+  createdAt DateTime @default(now())
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  type        String   // monthly_contribution, donation
+  referenceId String
+  familyId    String?
+  familyName  String?
+  description String
+  amount      Float
+  createdAt   DateTime @default(now())
+}
