@@ -1,4 +1,5 @@
 "use client"
+
 import { useEffect, useState, useCallback } from "react"
 import Link from "next/link"
 import { Plus, Search, Users, ChevronRight, Phone, MapPin } from "lucide-react"
@@ -28,14 +29,21 @@ export default function FamiliesPage() {
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [showAdd, setShowAdd] = useState(false)
+
   const currentMonth = getCurrentMonth()
 
   const fetchFamilies = useCallback(async () => {
     setLoading(true)
-    const params = new URLSearchParams({ page: page.toString(), limit: "15" })
+    const params = new URLSearchParams({
+      page: page.toString(),
+      limit: "15"
+    })
+
     if (search) params.set("search", search)
+
     const res = await fetch(`/api/family?${params}`)
     const json = await res.json()
+
     setFamilies(json.data || [])
     setTotalPages(json.totalPages || 1)
     setLoading(false)
@@ -45,23 +53,32 @@ export default function FamiliesPage() {
   useEffect(() => { setPage(1) }, [search])
 
   return (
-    <div className="p-6 lg:p-8 space-y-6 page-enter">
-      <PageHeader
-        title="Families"
-        description={`All registered families — ${formatMonth(currentMonth)}`}
-        action={isAdmin ? (
-          <Button onClick={() => setShowAdd(true)} className="bg-emerald-600 hover:bg-emerald-700">
-            <Plus className="h-4 w-4 mr-2" /> Add Family
+    <div className="w-full max-w-[100vw] overflow-x-hidden px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <PageHeader
+          title="Families"
+          description={`All registered families — ${formatMonth(currentMonth)}`}
+        />
+
+        {isAdmin && (
+          <Button
+            onClick={() => setShowAdd(true)}
+            className="bg-emerald-600 hover:bg-emerald-700 w-full sm:w-auto"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add Family
           </Button>
-        ) : undefined}
-      />
+        )}
+      </div>
 
       {/* Search */}
-      <div className="relative max-w-sm">
+      <div className="relative w-full sm:max-w-sm">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Search families..."
-          className="pl-9"
+          className="pl-9 w-full"
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
@@ -85,54 +102,80 @@ export default function FamiliesPage() {
           {families.map(family => (
             <Link key={family.id} href={`/families/${family.id}`}>
               <div className="bg-card border rounded-xl p-4 hover:border-emerald-300 hover:shadow-md transition-all cursor-pointer group">
-                <div className="flex items-center gap-4">
-                  {/* Avatar */}
-                  <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-display font-bold text-sm shrink-0">
-                    {family.familyName.charAt(0)}
-                  </div>
 
-                  {/* Info */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <p className="font-semibold text-foreground group-hover:text-emerald-700 transition-colors">
-                        {family.familyName}
-                      </p>
-                      {family.currentContribution ? (
-                        <StatusBadge status={family.currentContribution.status} />
-                      ) : (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-gray-50 text-gray-500 border-gray-200">
-                          No record
-                        </span>
-                      )}
+                {/* FLEX FIX */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+
+                  {/* Left Section */}
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+
+                    {/* Avatar */}
+                    <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm shrink-0">
+                      {family.familyName.charAt(0)}
                     </div>
-                    <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
-                      <span className="flex items-center gap-1">
-                        <Users className="h-3 w-3" /> {family.memberCount} members
-                      </span>
-                      {family.address && (
-                        <span className="flex items-center gap-1 truncate max-w-[200px]">
-                          <MapPin className="h-3 w-3 shrink-0" /> {family.address}
-                        </span>
-                      )}
-                      {family.phone && (
+
+                    {/* Info */}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <p className="font-semibold text-foreground break-words">
+                          {family.familyName}
+                        </p>
+
+                        {family.currentContribution ? (
+                          <StatusBadge status={family.currentContribution.status} />
+                        ) : (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs border bg-gray-50 text-gray-500 border-gray-200">
+                            No record
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Meta Info */}
+                      <div className="flex flex-wrap gap-2 mt-1 text-xs text-muted-foreground">
+
                         <span className="flex items-center gap-1">
-                          <Phone className="h-3 w-3" /> {family.phone}
+                          <Users className="h-3 w-3" />
+                          {family.memberCount} members
                         </span>
-                      )}
+
+                        {family.address && (
+                          <span className="flex items-center gap-1 break-words">
+                            <MapPin className="h-3 w-3 shrink-0" />
+                            {family.address}
+                          </span>
+                        )}
+
+                        {family.phone && (
+                          <span className="flex items-center gap-1">
+                            <Phone className="h-3 w-3" />
+                            {family.phone}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
 
-                  {/* Due amount */}
-                  <div className="text-right shrink-0 hidden sm:block">
-                    <p className="text-xs text-muted-foreground">Monthly Due</p>
-                    <p className="font-bold text-foreground">{formatCurrency(family.monthlyDue)}</p>
-                    {family.currentContribution && family.currentContribution.paidAmount > 0 && (
-                      <p className="text-xs text-emerald-600">
-                        Paid: {formatCurrency(family.currentContribution.paidAmount)}
+                  {/* Right Section */}
+                  <div className="flex items-center justify-between sm:justify-end gap-3">
+
+                    {/* Amount */}
+                    <div className="text-left sm:text-right">
+                      <p className="text-xs text-muted-foreground">Monthly Due</p>
+                      <p className="font-bold text-foreground whitespace-nowrap">
+                        {formatCurrency(family.monthlyDue)}
                       </p>
-                    )}
+
+                      {(family.currentContribution?.paidAmount ?? 0) > 0 && (
+                        <p className="text-xs text-emerald-600 whitespace-nowrap">
+                          Paid: {formatCurrency(family.currentContribution?.paidAmount ?? 0)}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Arrow */}
+                    <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
                   </div>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-emerald-600 transition-colors shrink-0" />
+
                 </div>
               </div>
             </Link>
@@ -142,12 +185,26 @@ export default function FamiliesPage() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 pt-2">
-          <Button variant="outline" size="sm" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}>
+        <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPage(p => Math.max(1, p - 1))}
+            disabled={page === 1}
+          >
             Previous
           </Button>
-          <span className="text-sm text-muted-foreground">Page {page} of {totalPages}</span>
-          <Button variant="outline" size="sm" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}>
+
+          <span className="text-sm text-muted-foreground">
+            Page {page} of {totalPages}
+          </span>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+          >
             Next
           </Button>
         </div>

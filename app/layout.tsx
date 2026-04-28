@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
-import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from "@/components/layout/AuthProvider"
 import { AppShell } from "@/components/layout/AppShell"
+import "./globals.css"
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://waripora.vercel.app"), // 🔥 change this
@@ -84,7 +84,7 @@ export default function RootLayout({
         />
       </head>
 
-      <body>
+      <body className="max-w-screen ">
         <AuthProvider>
           <AppShell>{children}</AppShell>
         </AuthProvider>
