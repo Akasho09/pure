@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "Masjid Committee Management System",
+    title: "Masjid Shareef Waripora",
     description:
       "Manage masjid finances, families, donations and contributions with ease.",
     url: "https://waripora.vercel.app",
@@ -45,7 +45,6 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/masjid-icon.jpg", 
-        height: 630,
         alt: "Masjid Shareef Waripora Dashboard",
       },
     ],
