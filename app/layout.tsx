@@ -37,16 +37,23 @@ export const metadata: Metadata = {
     creator: "@your_twitter", // optional
   },
 
-  openGraph: {
-    title: "Masjid Shareef Waripora",
-    description:
-      "Manage masjid finances, families, donations and contributions with ease.",
-    url: "https://waripora.vercel.app",
-    siteName: "Masjid Shareef Waripora",
-    images: [{ url: "/masjid-icon.jpg", width: 600, height: 600, alt: "Akash Ahmad Malik" }],
-    locale: "en_US",
-    type: "website",
-  },
+openGraph: {
+  title: "Masjid Shareef Waripora",
+  description:
+    "Manage masjid finances, families, donations and contributions with ease.",
+  url: "https://waripora.vercel.app",
+  siteName: "Masjid Shareef Waripora",
+  images: [
+    {
+      url: "https://waripora.vercel.app/image.png", // ✅ FIXED
+      width: 1200,
+      height: 630,
+      alt: "Masjid Shareef Waripora Dashboard",
+    },
+  ],
+  locale: "en_US",
+  type: "website",
+},
 };
 
 export default function RootLayout({
