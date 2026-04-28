@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     description:
       "Track donations, manage families, and handle masjid finances seamlessly.",
     images: ["/masjid-icon.jpg"],
-    creator: "@your_twitter", // optional
+    creator: "@your_twittear", // optional
   },
 
   robots: {
