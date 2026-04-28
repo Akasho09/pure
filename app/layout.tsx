@@ -5,15 +5,11 @@ import { AppShell } from "@/components/layout/AppShell"
 import "./globals.css"
 import { Analytics } from "@vercel/analytics/next"
 
-
 export const metadata: Metadata = {
-  metadataBase: new URL("https://waripora.vercel.app"), 
-
   title: {
     default: "Masjid Shareef Waripora",
     template: "%s | Waripora Masjid ",
   },
-
   description:
     "A modern system to manage masjid finances, families, donations, and monthly contributions efficiently.",
 
@@ -26,31 +22,11 @@ export const metadata: Metadata = {
   ],
 
   authors: [{ name: "Akash Malik" }],
-
   creator: "Akash Malik",
-  publisher: "Masjid CMS",
+  publisher: "Masjid Shareef Waripora",
+  robots: "index, follow",
+  icons: { icon: "/ak3.png" },
 
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
-
-  openGraph: {
-    title: "Masjid Shareef Waripora",
-    description:
-      "Manage masjid finances, families, donations and contributions with ease.",
-    url: "https://waripora.vercel.app",
-    siteName: "Masjid Shareef Waripora",
-    images: [
-      {
-        url: "https://waripora.vercel.app/masjid-icon.jpg",
-        alt: "Masjid Shareef Waripora Dashboard",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
 
   twitter: {
     card: "summary_large_image",
@@ -61,15 +37,17 @@ export const metadata: Metadata = {
     creator: "@your_twitter", // optional
   },
 
-  robots: {
-    index: true,
-    follow: true,
+  openGraph: {
+    title: "Masjid Shareef Waripora",
+    description:
+      "Manage masjid finances, families, donations and contributions with ease.",
+    url: "https://waripora.vercel.app",
+    siteName: "Masjid Shareef Waripora",
+    images: [{ url: "/masjid-icon.jpg", width: 600, height: 600, alt: "Akash Ahmad Malik" }],
+    locale: "en_US",
+    type: "website",
   },
-
-  alternates: {
-    canonical: "https://waripora.vercel.app",
-  },
-}
+};
 
 export default function RootLayout({
   children,
