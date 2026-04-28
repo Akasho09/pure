@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: "Masjid Shareef Waripora",
     description:
       "Manage masjid finances, families, donations and contributions with ease.",
-    url: "https://waripora.vercel.app",
+    url: "https://waripora.vercel.app/masjid-icon.jpg", // ✅ absolute URL
     siteName: "Masjid Shareef Waripora",
     images: [
       {
