@@ -5,7 +5,7 @@ import { AppShell } from "@/components/layout/AppShell"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://waripora.vercel.app"), // 🔥 change this
+  metadataBase: new URL("https://waripora.vercel.app"), 
 
   title: {
     default: "Masjid Committee Management System",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "Masjid Committee Management System",
     description:
       "Manage masjid finances, families, donations and contributions with ease.",
-    url: "https://your-domain.com",
+    url: "https://waripora.vercel.app",
     siteName: "Masjid CMS",
     images: [
       {
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     title: "Masjid Committee Management System",
     description:
       "Track donations, manage families, and handle masjid finances seamlessly.",
-    images: ["/og-image.png"],
+    images: ["/masjid-icon.jpg"],
     creator: "@your_twitter", // optional
   },
 
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: "https://your-domain.com",
+    canonical: "https://waripora.vercel.app",
   },
 }
 

@@ -18,6 +18,14 @@ interface DashboardData {
   masjidName: string
 }
 
+const masjidImages = [
+  "masjid-icon.jpg",
+  "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f",
+  "https://images.unsplash.com/photo-1578926375605-eaf7559b1458",
+  "https://images.unsplash.com/photo-1609599006353-e629aaabfeae",
+  "https://images.unsplash.com/photo-1591608511723-5e2b8f9d3e76"
+]
+
 export default function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
@@ -31,162 +39,138 @@ export default function DashboardPage() {
       })
   }, [])
 
-  if (loading) {
-    return (
-      <div className="w-full max-w-[100vw] overflow-x-hidden px-4 sm:px-6 lg:px-8 py-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-8 w-64 bg-muted rounded" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="h-28 bg-muted rounded-xl" />
-            ))}
-          </div>
-        </div>
-      </div>
-    )
-  }
-
+  if (loading) return null
   if (!data) return null
 
   return (
-    <div className="w-full max-w-[100vw] overflow-x-hidden px-4 sm:px-6 lg:px-8 py-6">
+    <div className="w-full max-w-[100vw] overflow-x-hidden px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 page-enter">
-        <div className="min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="arabic-decorative text-xl sm:text-2xl text-emerald-700 break-words">
-              بِسْمِ اللَّهِ
+        <div className="sm:col-span-2 relative  rounded-2xl overflow-hidden group">
+          <img
+            src={`${masjidImages[0]}?auto=format&fit=crop&w=1200`}
+            className="w-full h-full group-hover:scale-105 transition duration-700"
+          />
+
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4">
+            <span className="text-amber-300 text-xs tracking-wider">
+              {formatMonth(data.currentMonth)}
             </span>
-          </div>
 
-          <h1 className="text-xl sm:text-2xl font-display font-bold text-foreground break-words">
-            {data.masjidName}
-          </h1>
+            <h1 className="text-white text-xl sm:text-2xl font-bold leading-tight">
+              {data.masjidName}
+            </h1>
 
-          <p className="text-sm text-muted-foreground">
-            Dashboard — {formatMonth(data.currentMonth)}
-          </p>
+            <span className="text-xs text-emerald-200 mt-1">
+              بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيْمِ
+            </span>
         </div>
-
-        <div className="hidden sm:block text-right shrink-0">
-          <p className="text-xs text-muted-foreground">Current Period</p>
-          <p className="text-sm font-semibold text-foreground">
-            {formatMonth(data.currentMonth)}
-          </p>
-        </div>
+  
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-6">
+      {/* 🌙 STATS */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+
         <StatsCard
-          title="Total Families"
+          title="Families"
           value={data.totalFamilies}
           icon={<Users className="h-5 w-5" />}
-          iconBg="bg-blue-100 text-blue-700"
-          subtitle="Registered families"
+          iconBg="bg-emerald-100 text-emerald-700"
+          subtitle="Registered"
         />
 
         <StatsCard
-          title="Total Members"
+          title="Members"
           value={data.totalMembers}
           icon={<Users className="h-5 w-5" />}
-          iconBg="bg-violet-100 text-violet-700"
-          subtitle="Across all families"
+          iconBg="bg-emerald-50 text-emerald-800"
+          subtitle="Community"
         />
 
         <StatsCard
-          title="Collected This Month"
+          title="Collected"
           value={formatCurrency(data.totalCollectedMonth)}
           icon={<TrendingUp className="h-5 w-5" />}
-          iconBg="bg-emerald-100 text-emerald-700"
-          subtitle="Monthly contributions"
+          iconBg="bg-amber-100 text-amber-700"
+          subtitle="This month"
         />
 
         <StatsCard
-          title="Pending Dues"
+          title="Pending"
           value={formatCurrency(data.totalPendingMonth)}
           icon={<AlertCircle className="h-5 w-5" />}
           iconBg="bg-red-100 text-red-700"
-          subtitle="Outstanding this month"
+          subtitle="Due"
         />
 
         <StatsCard
-          title="Total Donations"
+          title="Donations"
           value={formatCurrency(data.totalDonations)}
           icon={<Gift className="h-5 w-5" />}
-          iconBg="bg-amber-100 text-amber-700"
-          subtitle="All time donations"
+          iconBg="bg-amber-50 text-amber-800"
+          subtitle="Sadaqah / Zakat"
         />
       </div>
 
-      {/* Recent Transactions */}
-      <Card className="shadow-sm">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base font-semibold">
+      {/* 💳 TRANSACTIONS */}
+      <Card className="border-emerald-100">
+        <CardHeader>
+          <CardTitle className="text-emerald-800">
             Recent Transactions
           </CardTitle>
         </CardHeader>
 
         <CardContent className="p-0">
-          {data.recentTransactions.length === 0 ? (
-            <div className="py-12 text-center text-muted-foreground text-sm">
-              <IndianRupee className="h-8 w-8 mx-auto mb-2 opacity-30" />
-              No transactions yet
-            </div>
-          ) : (
-            <div className="w-full overflow-x-auto">
-              <Table className="min-w-[600px]">
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Family</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
-                    <TableHead className="text-right hidden sm:table-cell">
-                      Date
-                    </TableHead>
+          <div className="w-full overflow-x-auto">
+            <Table className="min-w-[600px]">
+
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Family</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead className="text-right">Amount</TableHead>
+                  <TableHead className="text-right hidden sm:table-cell">Date</TableHead>
+                </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                {data.recentTransactions.map((tx: any) => (
+                  <TableRow key={tx.id}>
+                    <TableCell className="break-words max-w-[180px]">
+                      {tx.description}
+                    </TableCell>
+
+                    <TableCell className="truncate max-w-[140px]">
+                      {tx.familyName || "—"}
+                    </TableCell>
+
+                    <TableCell>
+                      <span className={`px-2 py-0.5 rounded-full text-xs border ${
+                        tx.type === "donation"
+                          ? "bg-amber-100 text-amber-800 border-amber-200"
+                          : "bg-emerald-100 text-emerald-800 border-emerald-200"
+                      }`}>
+                        {tx.type}
+                      </span>
+                    </TableCell>
+
+                    <TableCell className="text-right font-semibold text-emerald-700 whitespace-nowrap">
+                      {formatCurrency(tx.amount)}
+                    </TableCell>
+
+                    <TableCell className="text-right text-xs hidden sm:table-cell whitespace-nowrap">
+                      {formatDate(tx.createdAt)}
+                    </TableCell>
                   </TableRow>
-                </TableHeader>
+                ))}
+              </TableBody>
 
-                <TableBody>
-                  {data.recentTransactions.map((tx) => (
-                    <TableRow key={tx.id}>
-                      <TableCell className="font-medium text-sm break-words max-w-[180px]">
-                        {tx.description}
-                      </TableCell>
-
-                      <TableCell className="text-sm text-muted-foreground truncate max-w-[140px]">
-                        {tx.familyName || "—"}
-                      </TableCell>
-
-                      <TableCell>
-                        <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${
-                            tx.type === "donation"
-                              ? "bg-amber-50 text-amber-700 border-amber-200"
-                              : "bg-blue-50 text-blue-700 border-blue-200"
-                          }`}
-                        >
-                          {tx.type === "donation" ? "Donation" : "Contribution"}
-                        </span>
-                      </TableCell>
-
-                      <TableCell className="text-right font-semibold text-emerald-700 whitespace-nowrap">
-                        {formatCurrency(tx.amount)}
-                      </TableCell>
-
-                      <TableCell className="text-right text-xs text-muted-foreground hidden sm:table-cell whitespace-nowrap">
-                        {formatDate(tx.createdAt)}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          )}
+            </Table>
+          </div>
         </CardContent>
       </Card>
+
     </div>
   )
 }

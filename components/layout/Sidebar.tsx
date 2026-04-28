@@ -46,7 +46,7 @@ export function Sidebar({ isAdmin, adminName }: any) {
       <header className="fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800 lg:hidden">
         <div className="flex items-center gap-2">
           <img src="/masjid-icon.jpg" className="w-6 h-6 rounded" />
-          <span className="text-white font-semibold">Masjid CMS</span>
+          <span className="text-white font-semibold">Masjid Shareef Waripora</span>
         </div>
 
         <Button variant="ghost" size="icon" onClick={() => setOpen(!open)}>
@@ -71,8 +71,7 @@ export function Sidebar({ isAdmin, adminName }: any) {
           />
 
           <div>
-            <p className="text-white font-bold">Masjid CMS</p>
-            <p className="text-xs text-slate-400">Committee System</p>
+            <p className="text-white font-bold">Masjid Shareef Waripora</p>
           </div>
         </div>
 
