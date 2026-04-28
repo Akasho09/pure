@@ -40,11 +40,11 @@ export const metadata: Metadata = {
     title: "Masjid Shareef Waripora",
     description:
       "Manage masjid finances, families, donations and contributions with ease.",
-    url: "https://waripora.vercel.app/masjid-icon.jpg", // ✅ absolute URL
+    url: "https://waripora.vercel.app",
     siteName: "Masjid Shareef Waripora",
     images: [
       {
-        url: "/masjid-icon.jpg", 
+        url: "https://waripora.vercel.app/masjid-icon.jpg",
         alt: "Masjid Shareef Waripora Dashboard",
       },
     ],
@@ -57,8 +57,8 @@ export const metadata: Metadata = {
     title: "Masjid Shareef Waripora",
     description:
       "Track donations, manage families, and handle masjid finances seamlessly.",
-    images: ["/masjid-icon.jpg"],
-    creator: "@your_twittear", // optional
+    images: ["https://waripora.vercel.app/masjid-icon.jpg"],
+    creator: "@your_twitter", // optional
   },
 
   robots: {
