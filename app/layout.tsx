@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   creator: "Akash Malik",
   publisher: "Masjid Shareef Waripora",
   robots: "index, follow",
-  icons: { icon: "/ak3.png" },
+  icons: { icon: "/image.png" },
 
 
   twitter: {
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     title: "Masjid Shareef Waripora",
     description:
       "Track donations, manage families, and handle masjid finances seamlessly.",
-    images: ["https://waripora.vercel.app/masjid-icon.jpg"],
+    images: ["https://waripora.vercel.app/image.png"],
     creator: "@your_twitter", // optional
   },
 
