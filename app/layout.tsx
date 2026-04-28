@@ -3,12 +3,14 @@ import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from "@/components/layout/AuthProvider"
 import { AppShell } from "@/components/layout/AppShell"
 import "./globals.css"
+import { Analytics } from "@vercel/analytics/next"
+
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://waripora.vercel.app"), 
 
   title: {
-    default: "Masjid Committee Management System",
+    default: "Masjid Shareef Waripora",
     template: "%s | Waripora Masjid ",
   },
 
@@ -39,12 +41,12 @@ export const metadata: Metadata = {
     description:
       "Manage masjid finances, families, donations and contributions with ease.",
     url: "https://waripora.vercel.app",
-    siteName: "Masjid CMS",
+    siteName: "Masjid Shareef Waripora",
     images: [
       {
-        url: "/masjid-icon.jpg", // 🔥 create this width: 1200,
+        url: "/masjid-icon.jpg", 
         height: 630,
-        alt: "Masjid CMS Dashboard",
+        alt: "Masjid Shareef Waripora Dashboard",
       },
     ],
     locale: "en_US",
@@ -53,7 +55,7 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Masjid Committee Management System",
+    title: "Masjid Shareef Waripora",
     description:
       "Track donations, manage families, and handle masjid finances seamlessly.",
     images: ["/masjid-icon.jpg"],
@@ -83,7 +85,7 @@ export default function RootLayout({
           content="width=device-width, initial-scale=0.7, maximum-scale=0.7"
         />
       </head>
-
+      <Analytics></Analytics>
       <body className="max-w-screen ">
         <AuthProvider>
           <AppShell>{children}</AppShell>
